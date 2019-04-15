@@ -1,0 +1,955 @@
+  [1m[35m (135.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (92.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4306569120074957295)[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateProjects (20190415135131)
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (127.7ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190415135131"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTodos (20190415135150)
+  [1m[35m (7.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT pg_advisory_unlock(4306569120074957295)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4306569120074957295)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateTodos (20190415135150)
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (122.7ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (41.7ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190415135150"]]
+  [1m[35m (8.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-04-15 13:56:35.565567"], ["updated_at", "2019-04-15 13:56:35.565567"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT pg_advisory_unlock(4306569120074957295)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35mSQL (2.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (149.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "projects" CASCADE[0m
+  [1m[35m (82.8ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (8.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (92.3ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (43.3ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "projects" CASCADE[0m
+  [1m[35m (171.9ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (3.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (96.3ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (39.2ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35m (77.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20190415135150)[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20190415135131);
+
+[0m
+  [1m[35m (168.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-04-15 13:57:37.579217"], ["updated_at", "2019-04-15 13:57:37.579217"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2019-04-15 13:57:37.586198"], ["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "\x8C\xAE\xA9 \xAF\xE0\xAE\xA5\xAA\xE2"], ["created_at", "2019-04-15 14:03:12.836365"], ["updated_at", "2019-04-15 14:03:12.836365"]]
+  [1m[35m (12.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "\x8F\xAE\xA3\xAE\xA2\xAE\xE0\xA8\xE2\xEC \xE1 \xA6\xA5\xAD\xAE\xA9"], ["isCompleted", "f"], ["project_id", 1], ["created_at", "2019-04-15 14:03:46.425700"], ["updated_at", "2019-04-15 14:03:46.425700"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."project_id" = $1 LIMIT $2[0m  [["project_id", 1], ["LIMIT", 11]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."project_id" = $1 LIMIT $2[0m  [["project_id", 1], ["LIMIT", 11]]
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Семья"], ["created_at", "2019-04-15 14:11:26.553368"], ["updated_at", "2019-04-15 14:11:26.553368"]]
+  [1m[35m (9.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Купить молоко"], ["isCompleted", "f"], ["project_id", 2], ["created_at", "2019-04-15 14:11:26.671055"], ["updated_at", "2019-04-15 14:11:26.671055"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Заменить масло в двигателе до 23 апреля"], ["isCompleted", "f"], ["project_id", 2], ["created_at", "2019-04-15 14:11:26.678068"], ["updated_at", "2019-04-15 14:11:26.678068"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Отправить письмо бабушке"], ["isCompleted", "t"], ["project_id", 2], ["created_at", "2019-04-15 14:11:26.683066"], ["updated_at", "2019-04-15 14:11:26.683066"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Заплитить за квартиру"], ["isCompleted", "f"], ["project_id", 2], ["created_at", "2019-04-15 14:11:26.690001"], ["updated_at", "2019-04-15 14:11:26.690001"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Забрать обувь из ремонта"], ["isCompleted", "f"], ["project_id", 2], ["created_at", "2019-04-15 14:11:26.694993"], ["updated_at", "2019-04-15 14:11:26.694993"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Работа"], ["created_at", "2019-04-15 14:11:26.699978"], ["updated_at", "2019-04-15 14:11:26.699978"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Позвонить заказчику"], ["isCompleted", "t"], ["project_id", 3], ["created_at", "2019-04-15 14:11:26.705960"], ["updated_at", "2019-04-15 14:11:26.705960"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Отправить документы"], ["isCompleted", "t"], ["project_id", 3], ["created_at", "2019-04-15 14:11:26.710946"], ["updated_at", "2019-04-15 14:11:26.710946"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Запонлить отчет"], ["isCompleted", "f"], ["project_id", 3], ["created_at", "2019-04-15 14:11:26.714979"], ["updated_at", "2019-04-15 14:11:26.714979"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Работа"], ["created_at", "2019-04-15 14:11:26.719926"], ["updated_at", "2019-04-15 14:11:26.719926"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Позвонить другу"], ["isCompleted", "f"], ["project_id", 4], ["created_at", "2019-04-15 14:11:26.725905"], ["updated_at", "2019-04-15 14:11:26.725905"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Подготовиться к поездке"], ["isCompleted", "f"], ["project_id", 4], ["created_at", "2019-04-15 14:11:26.730895"], ["updated_at", "2019-04-15 14:11:26.730895"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35mSQL (0.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (18.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "projects" CASCADE[0m
+  [1m[35m (146.6ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (9.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (147.7ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (90.8ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35m (3.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (11.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "projects" CASCADE[0m
+  [1m[35m (149.6ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (9.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (107.7ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (190.5ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "development"], ["updated_at", "2019-04-15 14:12:08.320205"], ["key", "environment"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2019-04-15 14:12:08.329181"], ["key", "environment"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Семья"], ["created_at", "2019-04-15 14:12:08.520134"], ["updated_at", "2019-04-15 14:12:08.520134"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Купить молоко"], ["isCompleted", "f"], ["project_id", 1], ["created_at", "2019-04-15 14:12:08.630840"], ["updated_at", "2019-04-15 14:12:08.630840"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Заменить масло в двигателе до 23 апреля"], ["isCompleted", "f"], ["project_id", 1], ["created_at", "2019-04-15 14:12:08.639814"], ["updated_at", "2019-04-15 14:12:08.639814"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Отправить письмо бабушке"], ["isCompleted", "t"], ["project_id", 1], ["created_at", "2019-04-15 14:12:08.643803"], ["updated_at", "2019-04-15 14:12:08.643803"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Заплитить за квартиру"], ["isCompleted", "f"], ["project_id", 1], ["created_at", "2019-04-15 14:12:08.648791"], ["updated_at", "2019-04-15 14:12:08.648791"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Забрать обувь из ремонта"], ["isCompleted", "f"], ["project_id", 1], ["created_at", "2019-04-15 14:12:08.653776"], ["updated_at", "2019-04-15 14:12:08.653776"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Работа"], ["created_at", "2019-04-15 14:12:08.659759"], ["updated_at", "2019-04-15 14:12:08.659759"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Позвонить заказчику"], ["isCompleted", "t"], ["project_id", 2], ["created_at", "2019-04-15 14:12:08.666746"], ["updated_at", "2019-04-15 14:12:08.666746"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Отправить документы"], ["isCompleted", "t"], ["project_id", 2], ["created_at", "2019-04-15 14:12:08.677733"], ["updated_at", "2019-04-15 14:12:08.677733"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Запонлить отчет"], ["isCompleted", "f"], ["project_id", 2], ["created_at", "2019-04-15 14:12:08.683697"], ["updated_at", "2019-04-15 14:12:08.683697"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Работа"], ["created_at", "2019-04-15 14:12:08.688687"], ["updated_at", "2019-04-15 14:12:08.688687"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Позвонить другу"], ["isCompleted", "f"], ["project_id", 3], ["created_at", "2019-04-15 14:12:08.693673"], ["updated_at", "2019-04-15 14:12:08.693673"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Подготовиться к поездке"], ["isCompleted", "f"], ["project_id", 3], ["created_at", "2019-04-15 14:12:08.698656"], ["updated_at", "2019-04-15 14:12:08.698656"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTodo Load (3.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."project_id" = $1 LIMIT $2[0m  [["project_id", 1], ["LIMIT", 11]]
+  [1m[36mTodo Load (2.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."project_id" = $1 LIMIT $2[0m  [["project_id", 1], ["LIMIT", 11]]
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35mSQL (1.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (45.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "projects" CASCADE[0m
+  [1m[35m (117.7ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (10.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (104.7ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (59.8ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (9.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "projects" CASCADE[0m
+  [1m[35m (141.6ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (8.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (115.7ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (64.8ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "development"], ["updated_at", "2019-04-15 14:23:26.495910"], ["key", "environment"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2019-04-15 14:23:26.505903"], ["key", "environment"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Семья"], ["created_at", "2019-04-15 14:23:26.692196"], ["updated_at", "2019-04-15 14:23:26.692196"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Работа"], ["created_at", "2019-04-15 14:23:26.699182"], ["updated_at", "2019-04-15 14:23:26.699182"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Другое"], ["created_at", "2019-04-15 14:23:26.703168"], ["updated_at", "2019-04-15 14:23:26.703168"]]
+  [1m[35m (21.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (6.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "test"], ["created_at", "2019-04-15 14:25:17.904647"], ["updated_at", "2019-04-15 14:25:17.904647"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "test"], ["isCompleted", "f"], ["project_id", 4], ["created_at", "2019-04-15 14:25:34.127272"], ["updated_at", "2019-04-15 14:25:34.127272"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "projects"."id" FROM "projects"[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35mSQL (0.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (19.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "projects" CASCADE[0m
+  [1m[35m (136.7ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (24.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (96.7ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (38.9ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (16.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "projects" CASCADE[0m
+  [1m[35m (104.2ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (9.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (172.8ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (39.9ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "development"], ["updated_at", "2019-04-15 14:28:54.087656"], ["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2019-04-15 14:28:54.096624"], ["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Семья"], ["created_at", "2019-04-15 14:28:54.379871"], ["updated_at", "2019-04-15 14:28:54.379871"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Работа"], ["created_at", "2019-04-15 14:28:54.386848"], ["updated_at", "2019-04-15 14:28:54.386848"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Другое"], ["created_at", "2019-04-15 14:28:54.390839"], ["updated_at", "2019-04-15 14:28:54.390839"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "\x8A\xE3\xAF\xA8\xE2\xEC \xAC\xAE\xAB\xAE\xAA\xAE"], ["isCompleted", "f"], ["project_id", 4], ["created_at", "2019-04-15 14:29:16.641058"], ["updated_at", "2019-04-15 14:29:16.641058"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Семья"], ["created_at", "2019-04-15 14:29:59.799829"], ["updated_at", "2019-04-15 14:29:59.799829"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Работа"], ["created_at", "2019-04-15 14:29:59.806854"], ["updated_at", "2019-04-15 14:29:59.806854"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Другое"], ["created_at", "2019-04-15 14:29:59.811801"], ["updated_at", "2019-04-15 14:29:59.811801"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "\x91\xA5\xAC\xEC\xEF"], ["created_at", "2019-04-15 14:31:15.074472"], ["updated_at", "2019-04-15 14:31:15.074472"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "\x90\xA0\xA1\xAE\xE2\xA0"], ["created_at", "2019-04-15 14:31:15.084458"], ["updated_at", "2019-04-15 14:31:15.084458"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "\x84\xE0\xE3\xA3\xAE\xA5"], ["created_at", "2019-04-15 14:31:15.095416"], ["updated_at", "2019-04-15 14:31:15.095416"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "\x91\xA5\xAC\xEC\xEF"], ["created_at", "2019-04-15 14:32:03.124617"], ["updated_at", "2019-04-15 14:32:03.124617"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "\x91\xA5\xAC\xEC\xEF"], ["created_at", "2019-04-15 14:33:04.696736"], ["updated_at", "2019-04-15 14:33:04.696736"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "\x8A\xE3\xAF\xA8\xE2\xEC \xAC\xAE\xAB\xAE\xAA\xAE"], ["isCompleted", "f"], ["project_id", 11], ["created_at", "2019-04-15 14:33:07.646828"], ["updated_at", "2019-04-15 14:33:07.646828"]]
+  [1m[35m (7.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (36.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Семья"], ["created_at", "2019-04-15 14:37:11.124819"], ["updated_at", "2019-04-15 14:37:11.124819"]]
+  [1m[35m (44.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Купить молоко"], ["isCompleted", "f"], ["project_id", 12], ["created_at", "2019-04-15 14:37:11.303342"], ["updated_at", "2019-04-15 14:37:11.303342"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Заменить масло в двигателе до 23 апреля"], ["isCompleted", "f"], ["project_id", 12], ["created_at", "2019-04-15 14:37:11.307332"], ["updated_at", "2019-04-15 14:37:11.307332"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Отправить письмо бабушке"], ["isCompleted", "t"], ["project_id", 12], ["created_at", "2019-04-15 14:37:11.310322"], ["updated_at", "2019-04-15 14:37:11.310322"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Заплитить за квартиру"], ["isCompleted", "f"], ["project_id", 12], ["created_at", "2019-04-15 14:37:11.312317"], ["updated_at", "2019-04-15 14:37:11.312317"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Забрать обувь из ремонта"], ["isCompleted", "f"], ["project_id", 12], ["created_at", "2019-04-15 14:37:11.315309"], ["updated_at", "2019-04-15 14:37:11.315309"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Работа"], ["created_at", "2019-04-15 14:37:11.317305"], ["updated_at", "2019-04-15 14:37:11.317305"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Позвонить заказчику"], ["isCompleted", "t"], ["project_id", 13], ["created_at", "2019-04-15 14:37:11.320296"], ["updated_at", "2019-04-15 14:37:11.320296"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Отправить документы"], ["isCompleted", "t"], ["project_id", 13], ["created_at", "2019-04-15 14:37:11.323288"], ["updated_at", "2019-04-15 14:37:11.323288"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Запонлить отчет"], ["isCompleted", "f"], ["project_id", 13], ["created_at", "2019-04-15 14:37:11.325282"], ["updated_at", "2019-04-15 14:37:11.325282"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Другое"], ["created_at", "2019-04-15 14:37:11.328274"], ["updated_at", "2019-04-15 14:37:11.328274"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Позвонить другу"], ["isCompleted", "f"], ["project_id", 14], ["created_at", "2019-04-15 14:37:11.331268"], ["updated_at", "2019-04-15 14:37:11.331268"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Подготовиться к поездке"], ["isCompleted", "f"], ["project_id", 14], ["created_at", "2019-04-15 14:37:11.333263"], ["updated_at", "2019-04-15 14:37:11.333263"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "projects" CASCADE[0m
+  [1m[35m (132.9ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (35.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (69.8ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (83.1ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35m (105.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20190415135150)[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20190415135131);
+
+[0m
+  [1m[35m (94.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-04-15 14:39:52.044305"], ["updated_at", "2019-04-15 14:39:52.044305"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "projects" CASCADE[0m
+  [1m[35m (140.6ms)[0m  [1m[35mCREATE TABLE "projects" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (110.7ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "text" character varying, "isCompleted" boolean, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (37.0ms)[0m  [1m[35mCREATE  INDEX  "index_todos_on_project_id" ON "todos"  ("project_id")[0m
+  [1m[35m (97.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20190415135150)[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20190415135131);
+
+[0m
+  [1m[35m (85.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-04-15 14:39:52.650778"], ["updated_at", "2019-04-15 14:39:52.650778"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2019-04-15 14:39:52.654767"], ["key", "environment"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Семья"], ["created_at", "2019-04-15 14:39:52.786414"], ["updated_at", "2019-04-15 14:39:52.786414"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Купить молоко"], ["isCompleted", "f"], ["project_id", 1], ["created_at", "2019-04-15 14:39:52.833290"], ["updated_at", "2019-04-15 14:39:52.833290"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Заменить масло в двигателе до 23 апреля"], ["isCompleted", "f"], ["project_id", 1], ["created_at", "2019-04-15 14:39:52.836283"], ["updated_at", "2019-04-15 14:39:52.836283"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Отправить письмо бабушке"], ["isCompleted", "t"], ["project_id", 1], ["created_at", "2019-04-15 14:39:52.839274"], ["updated_at", "2019-04-15 14:39:52.839274"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Заплитить за квартиру"], ["isCompleted", "f"], ["project_id", 1], ["created_at", "2019-04-15 14:39:52.841271"], ["updated_at", "2019-04-15 14:39:52.841271"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Забрать обувь из ремонта"], ["isCompleted", "f"], ["project_id", 1], ["created_at", "2019-04-15 14:39:52.845259"], ["updated_at", "2019-04-15 14:39:52.845259"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Работа"], ["created_at", "2019-04-15 14:39:52.847254"], ["updated_at", "2019-04-15 14:39:52.847254"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Позвонить заказчику"], ["isCompleted", "t"], ["project_id", 2], ["created_at", "2019-04-15 14:39:52.849245"], ["updated_at", "2019-04-15 14:39:52.849245"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Отправить документы"], ["isCompleted", "t"], ["project_id", 2], ["created_at", "2019-04-15 14:39:52.852240"], ["updated_at", "2019-04-15 14:39:52.852240"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Запонлить отчет"], ["isCompleted", "f"], ["project_id", 2], ["created_at", "2019-04-15 14:39:52.854233"], ["updated_at", "2019-04-15 14:39:52.854233"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Другое"], ["created_at", "2019-04-15 14:39:52.856230"], ["updated_at", "2019-04-15 14:39:52.856230"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Позвонить другу"], ["isCompleted", "f"], ["project_id", 3], ["created_at", "2019-04-15 14:39:52.859221"], ["updated_at", "2019-04-15 14:39:52.859221"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Подготовиться к поездке"], ["isCompleted", "f"], ["project_id", 3], ["created_at", "2019-04-15 14:39:52.862213"], ["updated_at", "2019-04-15 14:39:52.862213"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Семья"], ["created_at", "2019-04-15 14:42:42.299459"], ["updated_at", "2019-04-15 14:42:42.299459"]]
+  [1m[35m (5.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Купить молоко"], ["isCompleted", "f"], ["project_id", 4], ["created_at", "2019-04-15 14:42:42.366280"], ["updated_at", "2019-04-15 14:42:42.366280"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Заменить масло в двигателе до 23 апреля"], ["isCompleted", "f"], ["project_id", 4], ["created_at", "2019-04-15 14:42:42.370270"], ["updated_at", "2019-04-15 14:42:42.370270"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Отправить письмо бабушке"], ["isCompleted", "t"], ["project_id", 4], ["created_at", "2019-04-15 14:42:42.373260"], ["updated_at", "2019-04-15 14:42:42.373260"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Заплитить за квартиру"], ["isCompleted", "f"], ["project_id", 4], ["created_at", "2019-04-15 14:42:42.376255"], ["updated_at", "2019-04-15 14:42:42.376255"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Забрать обувь из ремонта"], ["isCompleted", "f"], ["project_id", 4], ["created_at", "2019-04-15 14:42:42.379244"], ["updated_at", "2019-04-15 14:42:42.379244"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Работа"], ["created_at", "2019-04-15 14:42:42.382237"], ["updated_at", "2019-04-15 14:42:42.382237"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Позвонить заказчику"], ["isCompleted", "t"], ["project_id", 5], ["created_at", "2019-04-15 14:42:42.386226"], ["updated_at", "2019-04-15 14:42:42.386226"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Отправить документы"], ["isCompleted", "t"], ["project_id", 5], ["created_at", "2019-04-15 14:42:42.389222"], ["updated_at", "2019-04-15 14:42:42.389222"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Запонлить отчет"], ["isCompleted", "f"], ["project_id", 5], ["created_at", "2019-04-15 14:42:42.392213"], ["updated_at", "2019-04-15 14:42:42.392213"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "projects" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Другое"], ["created_at", "2019-04-15 14:42:42.395206"], ["updated_at", "2019-04-15 14:42:42.395206"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Позвонить другу"], ["isCompleted", "f"], ["project_id", 6], ["created_at", "2019-04-15 14:42:42.398193"], ["updated_at", "2019-04-15 14:42:42.398193"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "todos" ("text", "isCompleted", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["text", "Подготовиться к поездке"], ["isCompleted", "f"], ["project_id", 6], ["created_at", "2019-04-15 14:42:42.401186"], ["updated_at", "2019-04-15 14:42:42.401186"]]
+  [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "projects"."id" FROM "projects"[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "todos"."id" FROM "todos"[0m
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", nil], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", nil], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", nil], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", nil], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", nil], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTodo Load (3.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Started GET "/" for 127.0.0.1 at 2019-04-15 17:59:23 +0300
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering c:/RailsInstaller/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/railties-5.1.7/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered c:/RailsInstaller/Ruby2.3.3/lib/ruby/gems/2.3.0/gems/railties-5.1.7/lib/rails/templates/rails/welcome/index.html.erb (7.0ms)
+Completed 200 OK in 159ms (Views: 77.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:00:21 +0300
+  
+ArgumentError (Missing :controller key on routes definition, please check your routes.):
+  
+config/routes.rb:3:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:01:20 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (0.0ms)
+Completed 500 Internal Server Error in 134ms (ActiveRecord: 7.0ms)
+
+
+  
+SyntaxError (c:/Sites/pomogi/app/views/index/index.html.erb:1: syntax error, unexpected '=', expecting keyword_end
+...ActionView::OutputBuffer.new; = frstdb ;@output_buffer.safe_...
+...                               ^):
+  
+app/views/index/index.html.erb:1: syntax error, unexpected '=', expecting keyword_end
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:02:03 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 500 Internal Server Error in 117ms (ActiveRecord: 1.0ms)
+
+
+  
+SyntaxError (c:/Sites/pomogi/app/views/index/index.html.erb:1: syntax error, unexpected '=', expecting keyword_end
+...r.safe_append='<div>'.freeze; = @frstdb ;@output_buffer.safe...
+...                               ^):
+  
+app/views/index/index.html.erb:1: syntax error, unexpected '=', expecting keyword_end
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:03:00 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 500 Internal Server Error in 136ms (ActiveRecord: 7.0ms)
+
+
+  
+SyntaxError (c:/Sites/pomogi/app/views/index/index.html.erb:1: syntax error, unexpected '=', expecting keyword_end
+...r.safe_append='<div>'.freeze; = @frstdb ;@output_buffer.safe...
+...                               ^):
+  
+app/views/index/index.html.erb:1: syntax error, unexpected '=', expecting keyword_end
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:03:33 +0300
+Processing by IndexController#index as HTML
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (0.0ms)
+Completed 500 Internal Server Error in 127ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (c:/Sites/pomogi/app/views/index/index.html.erb:1: syntax error, unexpected '=', expecting keyword_end
+...r.safe_append='<div>'.freeze; = @frstdb ;@output_buffer.safe...
+...                               ^):
+  
+app/views/index/index.html.erb:1: syntax error, unexpected '=', expecting keyword_end
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:03:51 +0300
+Processing by IndexController#index as HTML
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (2.0ms)
+Completed 500 Internal Server Error in 3845ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionView::Template::Error (TypeError: Объект не поддерживает это свойство или метод):
+    4:     <title>Pomogitepls</title>
+    5:     <%= csrf_meta_tags %>
+    6: 
+    7:     <%= stylesheet_link_tag    'application', media: 'all'%>
+    8:     <%= javascript_include_tag 'application'%>
+    9:   </head>
+   10: 
+  
+app/views/layouts/application.html.erb:7:in `_app_views_layouts_application_html_erb__169733565_82054440'
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:04:18 +0300
+Processing by IndexController#index as HTML
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 174ms (Views: 133.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:05:09 +0300
+Processing by IndexController#index as HTML
+Completed 404 Not Found in 9ms (ActiveRecord: 2.0ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Todo without an ID):
+  
+app/controllers/index_controller.rb:3:in `index'
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:06:00 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 80ms (Views: 50.8ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:06:03 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 73ms (Views: 54.3ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:06:04 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 90ms (Views: 65.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:06:05 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 77ms (Views: 53.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:06:05 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 70ms (Views: 49.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:06:05 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 73ms (Views: 52.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:06:33 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 78ms (Views: 56.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:06:34 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (4.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 372ms (Views: 157.4ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:10:40 +0300
+Processing by IndexController#index as HTML
+Started GET "/articles" for 127.0.0.1 at 2019-04-15 18:10:40 +0300
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:10:40 +0300
+  
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (20.9ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+ActionController::RoutingError (No route matches [GET] "/articles"):
+  
+actionpack (5.1.7) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:30:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.1.7) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.7) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.7) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.7) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.7) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.7) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.7) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.7) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.7) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.7) lib/rack/method_override.rb:22:in `call'
+rack (2.0.7) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.7) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.7) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.7) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.7) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.7) lib/rails/engine.rb:522:in `call'
+puma (3.12.1) lib/puma/configuration.rb:227:in `call'
+puma (3.12.1) lib/puma/server.rb:660:in `handle_request'
+puma (3.12.1) lib/puma/server.rb:474:in `process_client'
+puma (3.12.1) lib/puma/server.rb:334:in `block in run'
+puma (3.12.1) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+  [1m[36mTodo Load (22.9ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (305.2ms)
+Completed 500 Internal Server Error in 515ms (ActiveRecord: 20.9ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `frstdb' for #<#<Class:0xb6070c0>:0xac17bb8>
+Did you mean?  @frstdb):
+  Rendered index/index.html.erb within layouts/application (293.2ms)
+    1: <div><%= frstdb.text %> qwe</div>
+Completed 500 Internal Server Error in 566ms (ActiveRecord: 22.9ms)
+
+
+  
+  
+app/views/index/index.html.erb:1:in `_app_views_index_index_html_erb___29228770_95953188'
+ActionView::Template::Error (undefined local variable or method `frstdb' for #<#<Class:0xb6070c0>:0xb72dab0>
+Did you mean?  @frstdb):
+    1: <div><%= frstdb.text %> qwe</div>
+  
+app/views/index/index.html.erb:1:in `_app_views_index_index_html_erb___29228770_95953188'
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:14:33 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (383.0ms)
+Completed 500 Internal Server Error in 919ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `frstdb' for #<#<Class:0xb6070c0>:0xaa621a0>
+Did you mean?  @frstdb):
+    1: <div><%= frstdb %> qwe</div>
+  
+app/views/index/index.html.erb:1:in `_app_views_index_index_html_erb___29228770_89330652'
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:50:51 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (320.1ms)
+Completed 500 Internal Server Error in 458ms (ActiveRecord: 1.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `frstdb' for #<#<Class:0xb6070c0>:0x9721d70>
+Did you mean?  @frstdb):
+    1: <div><%= frstdb %> qwe</div>
+  
+app/views/index/index.html.erb:1:in `_app_views_index_index_html_erb___29228770_79237572'
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:51:14 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 129ms (Views: 94.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:51:42 +0300
+Processing by IndexController#index as HTML
+  Rendering index/index.html.erb within layouts/application
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" LIMIT $1[0m  [["LIMIT", 11]]
+  Rendered index/index.html.erb within layouts/application (47.9ms)
+Completed 500 Internal Server Error in 165ms (ActiveRecord: 1.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `text' for #<Todo::ActiveRecord_Relation:0x57a5f30>):
+    1: <div><%= @frstdb.text %> qwe</div>
+  
+app/views/index/index.html.erb:1:in `_app_views_index_index_html_erb___29228770_45920544'
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:52:35 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 130ms (Views: 83.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:52:36 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 100ms (Views: 73.8ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:52:46 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 119ms (Views: 71.4ms | ActiveRecord: 5.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:52:48 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 110ms (Views: 82.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:57:46 +0300
+  
+SyntaxError (c:/Sites/pomogi/app/controllers/index_controller.rb:4: `@1' is not allowed as an instance variable name
+c:/Sites/pomogi/app/controllers/index_controller.rb:4: syntax error, unexpected end-of-input, expecting keyword_end
+		@1db1 = Todo.find(f)
+		 ^):
+  
+app/controllers/index_controller.rb:4: `@1' is not allowed as an instance variable name
+app/controllers/index_controller.rb:4: syntax error, unexpected end-of-input, expecting keyword_end
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:58:24 +0300
+  
+SyntaxError (c:/Sites/pomogi/app/controllers/index_controller.rb:4: `@1' is not allowed as an instance variable name
+c:/Sites/pomogi/app/controllers/index_controller.rb:4: syntax error, unexpected end-of-input
+		@1db1 = Todo.find(1)
+		 ^):
+  
+app/controllers/index_controller.rb:4: `@1' is not allowed as an instance variable name
+app/controllers/index_controller.rb:4: syntax error, unexpected end-of-input
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:59:03 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 132ms (Views: 83.8ms | ActiveRecord: 5.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:59:05 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 75ms (Views: 50.0ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 18:59:11 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 97ms (Views: 67.9ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 19:06:16 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (235.4ms)
+Completed 500 Internal Server Error in 353ms (ActiveRecord: 2.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `db1' for #<#<Class:0xb68e330>:0xb68cfe0>
+Did you mean?  @db1
+               @db10
+               @db8
+               @db7
+               @db9
+               @db5
+               @db4
+               @db3
+               @db2
+               @db6):
+    1: <h1>Задачи</h1>
+    2: <h2>Семья</h2>
+    3: <ul>
+    4: <li><%= db1%></li>
+    5: <li><%= db2%></li>
+    6: <li><%= db3%></li>
+    7: <li><%= db4%></li>
+  
+app/views/index/index.html.erb:4:in `_app_views_index_index_html_erb___29228770_95712324'
+Started GET "/" for 127.0.0.1 at 2019-04-15 19:06:57 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 111ms (Views: 65.0ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 19:07:26 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 113ms (Views: 75.1ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 19:07:28 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 136ms (Views: 81.9ms | ActiveRecord: 7.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-04-15 19:07:29 +0300
+Processing by IndexController#index as HTML
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mTodo Load (0.0ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  Rendering index/index.html.erb within layouts/application
+  Rendered index/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 100ms (Views: 55.2ms | ActiveRecord: 5.0ms)
+
+

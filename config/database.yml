@@ -1,0 +1,25 @@
+    development:
+     adapter: postgresql
+     encoding: unicode
+     database: developmentpls
+     pool: 5
+     username: postgres
+     password: 39370970z
+     host: localhost
+     
+    test:
+     adapter: postgresql
+     encoding: unicode
+     database: testpls
+     pool: 5
+     username: postgres
+     password: 39370970z
+     host: localhost
+     
+    production:
+     adapter: postgresql
+     encoding: unicode
+     database: productionpls
+     pool: 5
+     username: pomogitepls
+     password: 39370970z
