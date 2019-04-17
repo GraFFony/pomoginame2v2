@@ -1,20 +1,44 @@
 <h1>Задачи</h1>
 <h2>Семья</h2>
-<ul>
-<li><%= @db1.text %></li>
-<li><%= @db2.text %></li>
-<li><%= @db3.text %></li>
-<li><%= @db4.text %></li>
-<li><%= @db5.text %></li>
-</ul>
+	<ul>
+		<%= @todo1.find_each do |text| %>	
+			<li><%= text.text %></li>
+		<% end %>
+	</ul>
 <h2>Работа</h2>
-<ul>
-<li><%= @db6.text %></li>
-<li><%= @db7.text %></li>
-<li><%= @db8.text %></li>
-</ul>
+	<ul id="2">
+		<%= @Todo2.find_each do |t| %>
+			<li><%= t.text %></li>
+		<% end %>
+	</ul>
 <h2>Прочее</h2>
-<ul>
-<li><%= @db9.text %></li>
-<li><%= @db10.text %></li>
-</ul>
+	<ul>
+		<%= @Todo3.find_each do |t| %>
+			<li><%= t.text %></li>
+		<% end %>
+	</ul>
+<h1>Новая задача</h1>
+<a href="#" onclick="openform()">+</a>
+<div id="myform">
+	<%= form_for :todos, url: todos_path, :html =>{:id => "formform"} do |f| %>
+		<%= f.label :text %>
+			<br>
+    	<%= f.text_field :text %>
+			<br>
+		<%= f.select :project_id, options_for_select([['Семья', 1], ['Работа', 2], ['Прочее', 3]]) %>
+			<br>
+		<a href="#" onclick="closeform()">ОТМЕНА</a>
+		<a href="#" onclick="save()">ОК</a>	
+	<% end %>
+</div>
+<script type="text/javascript">
+		function save() {	
+		document.forms["formform"].submit();
+		}
+		function  closeform() {
+		document.getElementById('myform').style.display='none';
+		}
+		function openform() {
+		document.getElementById('myform').style.display='block';
+		}
+</script>
